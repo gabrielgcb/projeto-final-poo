@@ -4,6 +4,8 @@ import br.com.ufg.poo.interfaces.Exibivel;
 import br.com.ufg.poo.modelos.base.ObraDeArte;
 
 public class Escultura extends ObraDeArte {
+    private static int contadorID;
+    private final int id;
     private String material;
     private double altura;
 
@@ -11,12 +13,14 @@ public class Escultura extends ObraDeArte {
         super(titulo, artista, ano, descricao);
         this.material = material;
         this.altura = altura;
+        this.id = ++contadorID;
     }
 
     public Escultura(String titulo, int ano, String descricao, String material, double altura) {
         super(titulo, ano, descricao);
         this.material = material;
         this.altura = altura;
+        this.id = ++contadorID;
     }
 
     @Override

@@ -16,12 +16,7 @@ public class Museu {
         String nacionalidadeArtista = InputUtil.lerString("Digite a nacionalidade do artista: ");
         String biografiaArtista = InputUtil.lerString("Digite a biografia do artista: ");
 
-        Artista artista;
-        if(dataFalecimentoArtista != null) {
-            artista = new Artista(nomeArtista, dataNascimentoArtista, dataFalecimentoArtista, nacionalidadeArtista, biografiaArtista);
-        } else {
-            artista = new Artista(nomeArtista, dataNascimentoArtista, nacionalidadeArtista, biografiaArtista);
-        }
+        Artista artista = new Artista(nomeArtista, dataNascimentoArtista, dataFalecimentoArtista, nacionalidadeArtista, biografiaArtista);;
 
         String tituloObra = InputUtil.lerString("Digite o título da obra: ");
         int anoObra = InputUtil.lerInt("Digite o ano da obra: ");
@@ -29,8 +24,10 @@ public class Museu {
         String materialObra = InputUtil.lerString("Digite o material da obra: ");
         double alturaObra = InputUtil.lerDouble("Digite a altura da obra: ");
 
-        ObraDeArte obra = new Escultura(tituloObra, anoObra, descricaoObra, materialObra, alturaObra);
-
+        ObraDeArte obra = new Escultura(tituloObra, artista, anoObra, descricaoObra, materialObra, alturaObra);
+        obra.exibirInformacoes();
+        artista.exibirInformacoes();
+        
 //        Artista artista = new Artista(
 //                "Michelangelo",
 //                LocalDate.of(1800, 05, 10),
@@ -57,7 +54,6 @@ public class Museu {
 //                5.04
 //        );
 
-        artista.exibirInformacoes();
 
 //
 //        ObraDeArte pieta = new Escultura(

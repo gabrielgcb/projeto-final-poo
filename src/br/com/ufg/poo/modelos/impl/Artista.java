@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Artista implements Exibivel {
+    private static int contadorID;
+    private final int id;
     private String nome;
     private LocalDate dataDeNascimento;
     private LocalDate dataDeFalecimento;
@@ -23,6 +25,7 @@ public class Artista implements Exibivel {
         this.nacionalidade = nacionalidade;
         this.biografia = biografia;
         this.obras = new ArrayList<>();
+        this.id = ++contadorID;
     }
 
     public Artista(String nome, LocalDate dataDeNascimento, String nacionalidade, String biografia) {
@@ -31,6 +34,7 @@ public class Artista implements Exibivel {
         this.nacionalidade = nacionalidade;
         this.biografia = biografia;
         this.obras = new ArrayList<>();
+        this.id = ++contadorID;
     }
 
     @Override
