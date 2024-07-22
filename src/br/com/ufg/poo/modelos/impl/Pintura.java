@@ -1,7 +1,7 @@
 package br.com.ufg.poo.modelos.impl;
 
-import br.com.ufg.poo.interfaces.Exibivel;
 import br.com.ufg.poo.modelos.base.ObraDeArte;
+import br.com.ufg.poo.utilitarias.GerenciadorDeArtistas;
 
 public class Pintura extends ObraDeArte {
     private static int contadorID;
@@ -9,14 +9,14 @@ public class Pintura extends ObraDeArte {
     private String tecnica;
     private String dimensoes;
 
-    Pintura(String titulo, Artista artista, int ano, String descricao, String tecnica, String dimensoes) {
+    public Pintura(String titulo, Artista artista, int ano, String descricao, String tecnica, String dimensoes) {
         super(titulo, artista, ano, descricao);
         this.tecnica = tecnica;
         this.dimensoes = dimensoes;
         this.id = ++contadorID;
     }
 
-    Pintura(String titulo, int ano, String descricao, String tecnica, String dimensoes) {
+    public Pintura(String titulo, int ano, String descricao, String tecnica, String dimensoes) {
         super(titulo, ano, descricao);
         this.tecnica = tecnica;
         this.dimensoes = dimensoes;
@@ -29,19 +29,19 @@ public class Pintura extends ObraDeArte {
         System.out.printf("""
                 Tipo de obra: %s
                 Técnica: %s
-                Dimensões: %f
-                %n""", this.getClass().getName().substring(this.getClass().getName().lastIndexOf('.') + 1), tecnica, dimensoes
+                Dimensões: %s
+                %n""", this.getClass().getSimpleName(), tecnica, dimensoes
         );
     }
 
     @Override
     public void avaliar(int nota) {
-
+        // Implementação de avaliação
     }
 
     @Override
     public void exibirAvaliacao() {
-
+        // Implementação de exibição de avaliação
     }
 
     public String getTecnica() {
@@ -60,5 +60,19 @@ public class Pintura extends ObraDeArte {
         this.dimensoes = dimensoes;
     }
 
+    @Override
+    public String toArquivo() {
+        return String.join("|",
+                super.toArquivo(),
+                tecnica,
+                dimensoes
+        );
+    }
 
+    public static Pintura fromArquivo(String linha) {
+        String[] partes = linha.split("\\|");
+        Artista artista = partes[1].isEmpty() ? null : GerenciadorDeArtistas.getArtistaPorId(Integer.parseInt(partes[1]));
+
+        return new Pintura(partes[0], artista, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5]);
+    }
 }

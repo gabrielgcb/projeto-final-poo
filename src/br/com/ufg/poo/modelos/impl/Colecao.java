@@ -10,9 +10,8 @@ public class Colecao {
     private String nome;
     private List<ObraDeArte> obras;
 
-    public Colecao(String nome, List<ObraDeArte> obras) {
+    public Colecao(String nome) {
         this.nome = nome;
-        this.obras = obras;
         this.id = ++contadorID;
     }
 
