@@ -2,6 +2,7 @@ package br.com.ufg.poo.modelos.impl;
 
 import br.com.ufg.poo.modelos.base.ObraDeArte;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Colecao {
@@ -13,14 +14,11 @@ public class Colecao {
     public Colecao(String nome) {
         this.nome = nome;
         this.id = ++contadorID;
+        this.obras = new ArrayList<>();
     }
 
-    public void adicionarObra(ObraDeArte obra) {
-        this.obras.add(obra);
-    }
-
-    public void removerObra(ObraDeArte obra) {
-        this.obras.remove(obra);
+    public int getId() {
+        return id;
     }
 
     public String getNome() {
@@ -35,7 +33,12 @@ public class Colecao {
         return obras;
     }
 
-    public void setObras(List<ObraDeArte> obras) {
-        this.obras = obras;
+    public void adicionarObra(ObraDeArte obra) {
+        this.obras.add(obra);
+    }
+
+    @Override
+    public String toString() {
+        return nome;
     }
 }

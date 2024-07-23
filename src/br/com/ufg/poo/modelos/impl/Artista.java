@@ -17,6 +17,7 @@ public class Artista {
     private String biografia;
     private List<ObraDeArte> obras;
 
+    // Construtor padrão para criar um novo artista com todas as informações
     public Artista(String nome, LocalDate dataNascimento, LocalDate dataFalecimento, String nacionalidade, String biografia) {
         this.id = ++contadorID;
         this.nome = nome;
@@ -27,17 +28,45 @@ public class Artista {
         this.obras = new ArrayList<>();
     }
 
+    // Construtor para criar um artista "Desconhecido"
+    public Artista(String nome) {
+        this.id = ++contadorID;
+        this.nome = nome;
+        this.obras = new ArrayList<>();
+    }
+
+    // Adiciona uma obra à lista de obras do artista
     public void adicionarObra(ObraDeArte obra) {
         obras.add(obra);
     }
 
-    // Getters e setters...
+    // Getters e setters
     public int getId() {
         return id;
     }
 
     public String getNome() {
         return nome;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public LocalDate getDataFalecimento() {
+        return dataFalecimento;
+    }
+
+    public String getNacionalidade() {
+        return nacionalidade;
+    }
+
+    public String getBiografia() {
+        return biografia;
+    }
+
+    public List<ObraDeArte> getObras() {
+        return obras;
     }
 
     @Override
@@ -50,6 +79,7 @@ public class Artista {
                 biografia);
     }
 
+    // Converte os dados do artista em uma string formatada para salvar em arquivo
     public String toArquivo() {
         return String.join("|",
                 String.valueOf(id),
@@ -60,6 +90,7 @@ public class Artista {
                 biografia);
     }
 
+    // Cria um objeto Artista a partir de uma string formatada de arquivo
     public static Artista fromArquivo(String linha) {
         String[] partes = linha.split("\\|");
         LocalDate dataNascimento = partes[2].isEmpty() ? null : LocalDate.parse(partes[2], DateTimeFormatter.ofPattern("dd/MM/yyyy"));

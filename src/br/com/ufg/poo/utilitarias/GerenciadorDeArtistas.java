@@ -10,12 +10,15 @@ import java.util.stream.Collectors;
 public class GerenciadorDeArtistas {
     private static final List<Artista> artistas = new ArrayList<>();
 
+    // Adiciona um novo artista à lista
     public static void adicionarArtista(Artista artista) {
         artistas.add(artista);
     }
 
+    // Seleciona um artista da lista usando um diálogo
     public static Artista selecionarArtista() {
         if (artistas.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum artista cadastrado.");
             return null;
         }
 
@@ -40,6 +43,7 @@ public class GerenciadorDeArtistas {
         return null;
     }
 
+    // Obtém um artista pelo ID
     public static Artista getArtistaPorId(int id) {
         for (Artista artista : artistas) {
             if (artista.getId() == id) {
@@ -49,10 +53,17 @@ public class GerenciadorDeArtistas {
         return null;
     }
 
+    // Retorna a lista de todos os artistas
+    public static List<Artista> getTodosArtistas() {
+        return new ArrayList<>(artistas);
+    }
+
+    // Retorna a lista de artistas (método utilizado para salvar os dados)
     public static List<Artista> getArtistas() {
         return new ArrayList<>(artistas);
     }
 
+    // Lista os artistas cadastrados como uma string formatada
     public static String listarArtistas() {
         if (artistas.isEmpty()) {
             return "Nenhum artista cadastrado.";
