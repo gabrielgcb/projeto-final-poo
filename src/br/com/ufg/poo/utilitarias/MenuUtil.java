@@ -22,16 +22,31 @@ public class MenuUtil {
                 "Sair"
         };
 
-        return JOptionPane.showOptionDialog(
+        // Criar um JList com as opções
+        JList<String> list = new JList<>(opcoes);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setVisibleRowCount(opcoes.length);
+
+        // Adicionar o JList a um JScrollPane
+        JScrollPane scrollPane = new JScrollPane(list);
+
+        // Mostrar o JOptionPane com o JList
+        int option = JOptionPane.showOptionDialog(
                 null,
-                "Escolha uma opção:",
+                scrollPane,
                 "Menu Principal",
-                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
                 null,
-                opcoes,
-                opcoes[0]
+                new String[]{"Selecionar", "Cancelar"},
+                "Selecionar"
         );
+
+        if (option == JOptionPane.OK_OPTION) {
+            return list.getSelectedIndex();
+        } else {
+            return -1; // Indica que o usuário cancelou ou fechou a janela
+        }
     }
 
     public static void cadastrarNovoArtista() {
