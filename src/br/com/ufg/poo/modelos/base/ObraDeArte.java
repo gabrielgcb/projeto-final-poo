@@ -127,4 +127,28 @@ public abstract class ObraDeArte implements Exibivel, Avaliavel {
     public static ObraDeArte getObraPorId(int id) {
         return obrasMap.get(id);
     }
+
+    public static int getContadorID() {
+        return contadorID;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public Artista getArtista() {
+        return artista;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
 }
