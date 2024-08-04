@@ -7,6 +7,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Representa um artista que pode criar obras de arte.
+ */
 public class Artista {
     private static int contadorID;
     private final int id;
@@ -17,7 +20,15 @@ public class Artista {
     private String biografia;
     private List<ObraDeArte> obras;
 
-    // Construtor padrão para criar um novo artista com todas as informações
+    /**
+     * Construtor para criar um artista com todas as informações fornecidas.
+     *
+     * @param nome           Nome do artista.
+     * @param dataNascimento Data de nascimento do artista.
+     * @param dataFalecimento Data de falecimento do artista (pode ser null se ainda vivo).
+     * @param nacionalidade  Nacionalidade do artista.
+     * @param biografia      Biografia do artista.
+     */
     public Artista(String nome, LocalDate dataNascimento, LocalDate dataFalecimento, String nacionalidade, String biografia) {
         this.id = ++contadorID;
         this.nome = nome;
@@ -28,43 +39,85 @@ public class Artista {
         this.obras = new ArrayList<>();
     }
 
-    // Construtor para criar um artista "Desconhecido"
+    /**
+     * Construtor para criar um artista com apenas o nome.
+     *
+     * @param nome Nome do artista.
+     */
     public Artista(String nome) {
         this.id = ++contadorID;
         this.nome = nome;
         this.obras = new ArrayList<>();
     }
 
-    // Adiciona uma obra à lista de obras do artista
+    /**
+     * Adiciona uma obra à lista de obras do artista.
+     *
+     * @param obra A obra de arte a ser adicionada.
+     */
     public void adicionarObra(ObraDeArte obra) {
         obras.add(obra);
     }
 
-    // Getters e setters
+    /**
+     * Obtém o ID do artista.
+     *
+     * @return O ID do artista.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Obtém o nome do artista.
+     *
+     * @return O nome do artista.
+     */
     public String getNome() {
         return nome;
     }
 
+    /**
+     * Obtém a data de nascimento do artista.
+     *
+     * @return A data de nascimento do artista.
+     */
     public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
+    /**
+     * Obtém a data de falecimento do artista.
+     *
+     * @return A data de falecimento do artista ou null se ainda vivo.
+     */
     public LocalDate getDataFalecimento() {
         return dataFalecimento;
     }
 
+    /**
+     * Obtém a nacionalidade do artista.
+     *
+     * @return A nacionalidade do artista.
+     */
     public String getNacionalidade() {
         return nacionalidade;
     }
 
+    /**
+     * Obtém a biografia do artista.
+     *
+     * @return A biografia do artista.
+     */
     public String getBiografia() {
         return biografia;
     }
 
+    /**
+     * Obtém a lista de obras do artista.
+     *
+     * @return A lista de obras do artista.
+     */
     public List<ObraDeArte> getObras() {
         return obras;
     }
@@ -79,7 +132,11 @@ public class Artista {
                 biografia);
     }
 
-    // Converte os dados do artista em uma string formatada para salvar em arquivo
+    /**
+     * Converte os dados do artista em uma string formatada para salvar em arquivo.
+     *
+     * @return A string formatada.
+     */
     public String toArquivo() {
         return String.join("|",
                 String.valueOf(id),
@@ -90,7 +147,13 @@ public class Artista {
                 biografia);
     }
 
-    // Cria um objeto Artista a partir de uma string formatada de arquivo
+    /**
+     * Cria uma instância de {@link Artista} a partir de uma string formatada de arquivo.
+     *
+     * @param linha A string formatada contendo os dados do artista.
+     * @return Uma nova instância de {@link Artista}.
+     * @throws IllegalArgumentException Se o formato da linha for inválido.
+     */
     public static Artista fromArquivo(String linha) {
         String[] partes = linha.split("\\|");
 
@@ -104,5 +167,4 @@ public class Artista {
 
         return new Artista(partes[1], dataNascimento, dataFalecimento, partes[4], partes[5]);
     }
-
 }

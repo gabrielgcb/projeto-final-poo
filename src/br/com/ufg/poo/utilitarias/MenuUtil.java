@@ -1,9 +1,6 @@
 package br.com.ufg.poo.utilitarias;
 
 import br.com.ufg.poo.modelos.impl.Artista;
-import br.com.ufg.poo.modelos.impl.Colecao;
-import br.com.ufg.poo.modelos.impl.Escultura;
-import br.com.ufg.poo.modelos.base.ObraDeArte;
 
 import javax.swing.*;
 import java.time.LocalDate;
@@ -16,7 +13,6 @@ public class MenuUtil {
         String[] opcoes = {
                 "Cadastrar novo Artista",
                 "Cadastrar nova Obra",
-                "Adicionar Obra a Coleção",
                 "Visualizar Artistas Cadastrados",
                 "Visualizar Obras Cadastradas",
                 "Salvar Dados",

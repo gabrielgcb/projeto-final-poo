@@ -3,10 +3,9 @@ package br.com.ufg.poo;
 import br.com.ufg.poo.modelos.base.ObraDeArte;
 import br.com.ufg.poo.modelos.impl.Artista;
 import br.com.ufg.poo.modelos.impl.Escultura;
-import br.com.ufg.poo.modelos.impl.Colecao;
+import br.com.ufg.poo.modelos.impl.Pintura;
 import br.com.ufg.poo.utilitarias.GerenciadorDeArtistas;
 import br.com.ufg.poo.utilitarias.GerenciadorDeObras;
-import br.com.ufg.poo.utilitarias.GerenciadorDeColecoes;
 import br.com.ufg.poo.utilitarias.InputUtil;
 import br.com.ufg.poo.utilitarias.MenuUtil;
 
@@ -28,95 +27,55 @@ public class MuseuMain {
             switch (escolha) {
                 case 0 -> MenuUtil.cadastrarNovoArtista();
                 case 1 -> cadastrarNovaObra();
-                case 2 -> adicionarObraColecao();
-                case 3 -> visualizarArtistas();
-                case 4 -> visualizarObras();
-                case 5 -> salvarDados();
-                case 6 -> continuar = false;
+                case 2 -> visualizarArtistas();
+                case 3 -> visualizarObras();
+                case 4 -> salvarDados();
+                case 5 -> continuar = false;
                 default -> JOptionPane.showMessageDialog(null, "Opção inválida!");
             }
         }
     }
 
     private static void cadastrarNovaObra() {
+        // Menu de seleção de tipo de obra
+        String[] opcoes = {"Pintura", "Escultura"};
+        int tipoEscolhido = JOptionPane.showOptionDialog(
+                null,
+                "Escolha o tipo de obra:",
+                "Tipo de Obra",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                opcoes,
+                opcoes[0]
+        );
+
+        if (tipoEscolhido == JOptionPane.CLOSED_OPTION) {
+            JOptionPane.showMessageDialog(null, "Operação cancelada.");
+            return;
+        }
+
         Artista artista = MenuUtil.selecionarOuCadastrarArtista();
 
         String tituloObra = InputUtil.lerString("Digite o título da obra: ");
         int anoObra = InputUtil.lerInt("Digite o ano da obra: ");
         String descricaoObra = InputUtil.lerString("Digite a descrição da obra: ");
-        String materialObra = InputUtil.lerString("Digite o material da obra: ");
-        double alturaObra = InputUtil.lerDouble("Digite a altura da obra: ");
 
-        ObraDeArte obra = new Escultura(tituloObra, artista, anoObra, descricaoObra, materialObra, alturaObra);
+        ObraDeArte obra;
+        if (tipoEscolhido == 0) { // Pintura
+            String tecnica = InputUtil.lerString("Digite a técnica da pintura: ");
+            String dimensoes = InputUtil.lerString("Digite as dimensões da pintura: ");
+            obra = new Pintura(tituloObra, artista, anoObra, descricaoObra, tecnica, dimensoes);
+        } else { // Escultura
+            String material = InputUtil.lerString("Digite o material da escultura: ");
+            double altura = InputUtil.lerDouble("Digite a altura da escultura: ");
+            obra = new Escultura(tituloObra, artista, anoObra, descricaoObra, material, altura);
+        }
+
         GerenciadorDeObras.adicionarObra(obra);
         obra.exibirInformacoes();
     }
 
-    private static void adicionarObraColecao() {
-        List<Colecao> colecoes = GerenciadorDeColecoes.getTodasColecoes();
-        List<Artista> artistas = GerenciadorDeArtistas.getTodosArtistas();
-
-        // Adicionar opção "Desconhecido"
-        Artista desconhecido = new Artista("Desconhecido");
-        artistas.add(desconhecido);
-
-        // Seleção de coleção
-        Colecao[] arrayColecoes = new Colecao[colecoes.size() + 1];
-        colecoes.toArray(arrayColecoes);
-        arrayColecoes[colecoes.size()] = new Colecao("Nova Coleção");
-        Colecao colecaoSelecionada = (Colecao) JOptionPane.showInputDialog(
-                null,
-                "Selecione uma coleção:",
-                "Adicionar Obra à Coleção",
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                arrayColecoes,
-                arrayColecoes[0]
-        );
-
-        if (colecaoSelecionada == null) {
-            return;
-        }
-
-        if (colecaoSelecionada.getNome().equals("Nova Coleção")) {
-            String nomeNovaColecao = JOptionPane.showInputDialog("Digite o nome da nova coleção:");
-            if (nomeNovaColecao != null && !nomeNovaColecao.trim().isEmpty()) {
-                colecaoSelecionada = new Colecao(nomeNovaColecao);
-                GerenciadorDeColecoes.adicionarColecao(colecaoSelecionada);
-            } else {
-                JOptionPane.showMessageDialog(null, "Nome da coleção inválido.");
-                return;
-            }
-        }
-
-        // Seleção de artista
-        Artista[] arrayArtistas = new Artista[artistas.size()];
-        artistas.toArray(arrayArtistas);
-        Artista artistaSelecionado = (Artista) JOptionPane.showInputDialog(
-                null,
-                "Selecione um artista:",
-                "Adicionar Obra à Coleção",
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                arrayArtistas,
-                arrayArtistas[0]
-        );
-
-        if (artistaSelecionado == null) {
-            return;
-        }
-
-        // Dados da obra
-        String tituloObra = JOptionPane.showInputDialog("Digite o título da obra:");
-        int anoObra = Integer.parseInt(JOptionPane.showInputDialog("Digite o ano da obra:"));
-        String descricaoObra = JOptionPane.showInputDialog("Digite a descrição da obra:");
-        String materialObra = JOptionPane.showInputDialog("Digite o material da obra:");
-        double alturaObra = Double.parseDouble(JOptionPane.showInputDialog("Digite a altura da obra:"));
-
-        ObraDeArte novaObra = new Escultura(tituloObra, artistaSelecionado.equals(desconhecido) ? null : artistaSelecionado, anoObra, descricaoObra, materialObra, alturaObra);
-        colecaoSelecionada.adicionarObra(novaObra);
-        JOptionPane.showMessageDialog(null, "Obra adicionada à coleção com sucesso.");
-    }
 
     private static void visualizarArtistas() {
         String artistas = GerenciadorDeArtistas.listarArtistas();
