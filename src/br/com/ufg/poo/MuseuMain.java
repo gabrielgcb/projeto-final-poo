@@ -154,19 +154,32 @@ public class MuseuMain {
 
             String linha;
             while ((linha = readerArtistas.readLine()) != null) {
-                Artista artista = Artista.fromArquivo(linha);
-                GerenciadorDeArtistas.adicionarArtista(artista);
+                if (!linha.trim().isEmpty()) {
+                    try {
+                        Artista artista = Artista.fromArquivo(linha);
+                        GerenciadorDeArtistas.adicionarArtista(artista);
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("Erro ao carregar artista: " + e.getMessage());
+                    }
+                }
             }
 
             while ((linha = readerObras.readLine()) != null) {
-                ObraDeArte obra = ObraDeArte.fromArquivo(linha);
-                GerenciadorDeObras.adicionarObra(obra);
+                if (!linha.trim().isEmpty()) {
+                    try {
+                        ObraDeArte obra = ObraDeArte.fromArquivo(linha);
+                        GerenciadorDeObras.adicionarObra(obra);
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("Erro ao carregar obra: " + e.getMessage());
+                    }
+                }
             }
 
         } catch (FileNotFoundException e) {
-            // Arquivo não encontrado, pode ser a primeira execução
+            System.err.println("Arquivo não encontrado: " + e.getMessage());
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Erro ao carregar dados: " + e.getMessage());
         }
     }
+
 }

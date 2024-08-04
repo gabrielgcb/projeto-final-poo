@@ -8,6 +8,7 @@ import br.com.ufg.poo.modelos.base.ObraDeArte;
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class MenuUtil {
 
@@ -50,18 +51,37 @@ public class MenuUtil {
     }
 
     public static void cadastrarNovoArtista() {
-        String nome = JOptionPane.showInputDialog("Digite o nome do artista:");
-        String dataNascimentoStr = JOptionPane.showInputDialog("Digite a data de nascimento do artista (dd/MM/yyyy):");
-        String dataFalecimentoStr = JOptionPane.showInputDialog("Digite a data de falecimento do artista (dd/MM/yyyy) ou deixe vazio se ainda estiver vivo:");
-        String nacionalidade = JOptionPane.showInputDialog("Digite a nacionalidade do artista:");
-        String biografia = JOptionPane.showInputDialog("Digite a biografia do artista:");
+        try {
+            String nome = JOptionPane.showInputDialog("Digite o nome do artista:");
+            if (nome == null || nome.trim().isEmpty()) {
+                throw new IllegalArgumentException("Nome do artista não pode ser vazio.");
+            }
 
-        LocalDate dataNascimento = LocalDate.parse(dataNascimentoStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        LocalDate dataFalecimento = dataFalecimentoStr.isEmpty() ? null : LocalDate.parse(dataFalecimentoStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            LocalDate dataNascimento = InputUtil.lerData("Digite a data de nascimento do artista (dd/MM/yyyy):");
 
-        Artista artista = new Artista(nome, dataNascimento, dataFalecimento, nacionalidade, biografia);
-        GerenciadorDeArtistas.adicionarArtista(artista);
+            String dataFalecimentoStr = JOptionPane.showInputDialog("Digite a data de falecimento do artista (dd/MM/yyyy) ou deixe vazio se ainda estiver vivo:");
+            LocalDate dataFalecimento = dataFalecimentoStr == null || dataFalecimentoStr.trim().isEmpty()
+                    ? null
+                    : LocalDate.parse(dataFalecimentoStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+            String nacionalidade = JOptionPane.showInputDialog("Digite a nacionalidade do artista:");
+            if (nacionalidade == null || nacionalidade.trim().isEmpty()) {
+                throw new IllegalArgumentException("Nacionalidade não pode ser vazia.");
+            }
+
+            String biografia = JOptionPane.showInputDialog("Digite a biografia do artista:");
+
+            Artista artista = new Artista(nome, dataNascimento, dataFalecimento, nacionalidade, biografia);
+            GerenciadorDeArtistas.adicionarArtista(artista);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(null, "Formato de data inválido. Por favor, use o formato dd/MM/yyyy.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao cadastrar o artista: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
+
 
     public static void mostrarArtistas(String artistas) {
         JOptionPane.showMessageDialog(null, artistas, "Artistas Cadastrados", JOptionPane.INFORMATION_MESSAGE);

@@ -1,1 +1,3 @@
 1|Michelangelo|01/02/1800|15/06/1854|Italiano|Um grande artista
+2|Leonardo da Vinci|15/04/1452|02/05/1519|Italiano|Uma figura importante do Alto Renascentismo
+3|Pablo Picasso|25/10/1881|08/04/1973|Espanhol|Foi um pintor, escultor, cenógrafo e dramaturgo

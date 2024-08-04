@@ -3,6 +3,7 @@ package br.com.ufg.poo.modelos.base;
 import br.com.ufg.poo.interfaces.Avaliavel;
 import br.com.ufg.poo.interfaces.Exibivel;
 import br.com.ufg.poo.modelos.impl.Artista;
+import br.com.ufg.poo.modelos.impl.Escultura;
 import br.com.ufg.poo.modelos.impl.Pintura;
 import br.com.ufg.poo.utilitarias.GerenciadorDeArtistas;
 
@@ -68,13 +69,26 @@ public abstract class ObraDeArte implements Exibivel, Avaliavel {
 
     public static ObraDeArte fromArquivo(String linha) {
         String[] partes = linha.split("\\|");
-        Artista artista = partes[1].isEmpty() ? null : GerenciadorDeArtistas.getArtistaPorId(Integer.parseInt(partes[1]));
 
-        // Verificar o tipo de obra para criar a instância correta
-        // Exemplo aqui é para a classe `Pintura`
-        // Adicione lógica semelhante para outros tipos de obras se necessário
-        return new Pintura(partes[0], artista, Integer.parseInt(partes[2]), partes[3], partes[4], partes[5]);
+        // Verificar se a linha contém o número correto de partes
+        if (partes.length < 5) {
+            throw new IllegalArgumentException("Formato de linha inválido: " + linha);
+        }
+
+        try {
+            String titulo = partes[0];
+            Artista artista = GerenciadorDeArtistas.getArtistaPorId(Integer.parseInt(partes[1]));
+            int ano = Integer.parseInt(partes[2]);
+            String descricao = partes[3];
+            String material = partes[4];
+            double altura = Double.parseDouble(partes[5]);
+
+            return new Escultura(titulo, artista, ano, descricao, material, altura);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Formato numérico inválido na linha: " + linha);
+        }
     }
+
 
     public static ObraDeArte getObraPorId(int id) {
         return obrasMap.get(id);

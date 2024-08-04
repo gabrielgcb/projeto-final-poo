@@ -93,9 +93,16 @@ public class Artista {
     // Cria um objeto Artista a partir de uma string formatada de arquivo
     public static Artista fromArquivo(String linha) {
         String[] partes = linha.split("\\|");
+
+        // Verificar se a linha contém o número correto de partes
+        if (partes.length < 6) {
+            throw new IllegalArgumentException("Formato de linha inválido: " + linha);
+        }
+
         LocalDate dataNascimento = partes[2].isEmpty() ? null : LocalDate.parse(partes[2], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         LocalDate dataFalecimento = partes[3].isEmpty() ? null : LocalDate.parse(partes[3], DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
         return new Artista(partes[1], dataNascimento, dataFalecimento, partes[4], partes[5]);
     }
+
 }

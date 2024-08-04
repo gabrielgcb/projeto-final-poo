@@ -1,1 +1,2 @@
-David|1|1830|Uma obra baseada num anjo|1|1|Mármore
+Autorretrato|3|1907|Uma pintura do espanhol Pablo Picasso|1|Tinta|1.26
+David|1|1504|O trabalho retrata o herói bíblico como realismo anatômico|2|Mármore de Carrara|5.17
