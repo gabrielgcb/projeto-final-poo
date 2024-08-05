@@ -37,17 +37,11 @@ public class Escultura extends ObraDeArte {
     }
 
     @Override
-    public String toArquivo() {
-        return super.toArquivo() + "|" + material + "|" + altura;
-    }
-
-    @Override
-    public void avaliar(int nota) {
-        // Implementação de avaliação
-    }
-
-    @Override
     public void exibirAvaliacao() {
-        // Implementação de exibição de avaliação
+        if (avaliacao == null) {
+            System.out.println("A obra ainda não foi avaliada.");
+        } else {
+            System.out.println("Nota da avaliação: " + avaliacao);
+        }
     }
 }

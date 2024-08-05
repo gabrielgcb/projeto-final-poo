@@ -4,6 +4,7 @@ import br.com.ufg.poo.excecoes.ObraJaExisteException;
 import br.com.ufg.poo.modelos.base.ObraDeArte;
 import br.com.ufg.poo.modelos.impl.Artista;
 import br.com.ufg.poo.modelos.impl.Escultura;
+import br.com.ufg.poo.modelos.impl.Pintura;
 import br.com.ufg.poo.utilitarias.GerenciadorDeArtistas;
 import br.com.ufg.poo.utilitarias.GerenciadorDeObras;
 import br.com.ufg.poo.utilitarias.InputUtil;
@@ -17,7 +18,7 @@ public class MuseuMain {
     private static final String ARQUIVO_ARTISTAS = "artistas.txt";
     private static final String ARQUIVO_OBRAS = "obras.txt";
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         carregarDados();
         boolean continuar = true;
 
@@ -37,15 +38,40 @@ public class MuseuMain {
     }
 
     private static void cadastrarNovaObra() {
+        // Menu de seleção de tipo de obra
+        String[] opcoes = {"Pintura", "Escultura"};
+        int tipoEscolhido = JOptionPane.showOptionDialog(
+                null,
+                "Escolha o tipo de obra:",
+                "Tipo de Obra",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                opcoes,
+                opcoes[0]
+        );
+
+        if (tipoEscolhido == JOptionPane.CLOSED_OPTION) {
+            JOptionPane.showMessageDialog(null, "Operação cancelada.");
+            return;
+        }
+
         Artista artista = MenuUtil.selecionarOuCadastrarArtista();
 
         String tituloObra = InputUtil.lerString("Digite o título da obra: ");
         int anoObra = InputUtil.lerInt("Digite o ano da obra: ");
         String descricaoObra = InputUtil.lerString("Digite a descrição da obra: ");
-        String materialObra = InputUtil.lerString("Digite o material da obra: ");
-        double alturaObra = InputUtil.lerDouble("Digite a altura da obra: ");
 
-        ObraDeArte obra = new Escultura(tituloObra, artista, anoObra, descricaoObra, materialObra, alturaObra);
+        ObraDeArte obra;
+        if (tipoEscolhido == 0) { // Pintura
+            String tecnica = InputUtil.lerString("Digite a técnica da pintura: ");
+            String dimensoes = InputUtil.lerString("Digite as dimensões da pintura: ");
+            obra = new Pintura(tituloObra, artista, anoObra, descricaoObra, tecnica, dimensoes);
+        } else { // Escultura
+            String material = InputUtil.lerString("Digite o material da escultura: ");
+            double altura = InputUtil.lerDouble("Digite a altura da escultura: ");
+            obra = new Escultura(tituloObra, artista, anoObra, descricaoObra, material, altura);
+        }
 
         try {
             GerenciadorDeObras.adicionarObra(obra);

@@ -16,6 +16,7 @@ import java.util.Map;
 public abstract class ObraDeArte implements Exibivel, Avaliavel {
     private static int contadorID;
     private final int id;
+    protected Integer avaliacao;
     private String titulo;
     private Artista artista;
     private int ano;
@@ -150,5 +151,22 @@ public abstract class ObraDeArte implements Exibivel, Avaliavel {
 
     public String getDescricao() {
         return descricao;
+    }
+
+    @Override
+    public void avaliar(int nota) {
+        if (nota < 0 || nota > 10) {
+            throw new IllegalArgumentException("Nota deve estar entre 0 e 10.");
+        }
+        this.avaliacao = nota;
+    }
+
+    @Override
+    public void exibirAvaliacao() {
+        if (avaliacao == null) {
+            System.out.println("A obra ainda não foi avaliada.");
+        } else {
+            System.out.println("Nota da avaliação: " + avaliacao);
+        }
     }
 }

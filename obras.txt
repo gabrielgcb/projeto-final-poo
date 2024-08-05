@@ -1,2 +1,3 @@
-Autorretrato|3|1907|Uma pintura do espanhol Pablo Picasso|1|1|Tinta
-David|1|1504|O trabalho retrata o herói bíblico como realismo anatômico|2|2|Mármore de Carrara
+Autorretrato|3|1907|Uma pintura do espanhol Pablo Picasso|1|1|1
+David|1|1504|O trabalho retrata o herói bíblico como realismo anatômico|2|2|2
+A noite estrelada|4|1889|Uma pintura de Van Gogh|3|Tinta a óleo|0.73

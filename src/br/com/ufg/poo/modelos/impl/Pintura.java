@@ -56,16 +56,6 @@ public class Pintura extends ObraDeArte {
         );
     }
 
-    @Override
-    public void avaliar(int nota) {
-        // Implementação de avaliação
-    }
-
-    @Override
-    public void exibirAvaliacao() {
-        // Implementação de exibição de avaliação
-    }
-
     /**
      * Obtém a técnica utilizada na pintura.
      *
